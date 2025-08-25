@@ -1,8 +1,9 @@
 //CASOS DE USO DOS ITENS
 
 // -> criar item com subtotal certo
-async function createItem(name, price, quantity) {
+async function createItem(id, name, price, quantity) {
   return {
+    id,
     name,
     price,
     quantity,

@@ -9,8 +9,8 @@ async function addItem(userCart, item) {
 async function calculateTotal(userCart) {
   console.log("\nShopee Cart TOTAL IS:");
 
-  const result = userCart.reduce((total, item) => total + item.subtotal(), 0);
-  console.log(`🎁Total: ${result}`);
+  const result = userCart.reduce((total, item) => total + item.subtotal(), 0).toFixed(2);
+  console.log(`🎁Total: R$ ${result}`);
 }
 
 // ✅ -> Deletar item do carrinho
@@ -23,8 +23,8 @@ async function deleteItem(userCart, name) {
 }
 
 // ✅ -> Remover um item - diminuir a quantidade de um item
-async function removeItem(userCart, item, quantity) {
-  //1. encontrar o indice do item
+async function removeItem(userCart, item) {
+  //1. Encontra o indice do item
   const indexFound = userCart.findIndex((p) => p.name === item.name);
 
   //2. Caso não encontre o item
@@ -33,29 +33,37 @@ async function removeItem(userCart, item, quantity) {
     return;
   }
 
-  //3. item > 1 subtrair um item
-  if (userCart[indexFound] !== null) {
-    userCart[indexFound].quantity -= quantity;
-    //4. caso a quantidade esteja zerada deletar o item
-    if (userCart[indexFound].quantity <= 0) {
-      userCart.splice(indexFound, 1);
+  //3. Se quantidade > 1 subtrair um da quantidade do item
+  if (userCart[indexFound].quantity > 1) {
+    userCart[indexFound].quantity -= 1;
     return;
   }
+
+  //4. Caso quantidade do item = 1 deletar o item
+  if (userCart[indexFound].quantity == 1) {
+    userCart.splice(indexFound, 1);
     return;
   }
-  
 }
 
 // ✅ -> Mostrar todos os items do carrinho
-async function displaycart(userCart) {
+async function displayCart(userCart) {
   console.log("\nShopee cart list:");
   userCart.forEach((item, index) => {
     console.log(
       `${index + 1}. ${item.name} - R$ ${item.price} | ${
         item.quantity
-      }x | Subtotal = ${item.subtotal()}`
+      }x | Subtotal = R$ ${item.subtotal().toFixed(2)}`
     );
   });
 }
 
-export { addItem, calculateTotal, deleteItem, removeItem, displaycart };
+async function filterCart(userCart, filterBy) {
+  let filteredCart = filterItemList(userCart, filterBy);
+  console.log(`Exemplo de resultado da lista filtrada por ${filterBy}  
+  `);
+  filteredCart.forEach(() => console.log(`Item: ${filteredCart.name} | Price: ${filteredCart.price} | Quantity: ${filteredCart.quantity}`))
+}
+
+
+export { addItem, calculateTotal, deleteItem, removeItem, displayCart, filterCart };
