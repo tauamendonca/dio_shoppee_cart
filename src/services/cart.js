@@ -1,9 +1,13 @@
+import { filterItemList } from "./utils.js";
+
 //AÇÕES DO CARRINHO DE COMPRAS
+
 
 // ✅ -> Adicionar item no carrinho
 async function addItem(userCart, item) {
   userCart.push(item);
 }
+
 
 // ✅ -> Calcular o total do carrinho
 async function calculateTotal(userCart) {
@@ -13,6 +17,7 @@ async function calculateTotal(userCart) {
   console.log(`🎁Total: R$ ${result}`);
 }
 
+
 // ✅ -> Deletar item do carrinho
 async function deleteItem(userCart, name) {
   const index = userCart.findIndex((item) => item.name === name);
@@ -21,6 +26,7 @@ async function deleteItem(userCart, name) {
     userCart.splice(index, 1);
   }
 }
+
 
 // ✅ -> Remover um item - diminuir a quantidade de um item
 async function removeItem(userCart, item) {
@@ -46,6 +52,7 @@ async function removeItem(userCart, item) {
   }
 }
 
+
 // ✅ -> Mostrar todos os items do carrinho
 async function displayCart(userCart) {
   console.log("\nShopee cart list:");
@@ -58,12 +65,14 @@ async function displayCart(userCart) {
   });
 }
 
-async function filterCart(userCart, filterBy) {
-  let filteredCart = filterItemList(userCart, filterBy);
-  console.log(`Exemplo de resultado da lista filtrada por ${filterBy}  
-  `);
-  filteredCart.forEach(() => console.log(`Item: ${filteredCart.name} | Price: ${filteredCart.price} | Quantity: ${filteredCart.quantity}`))
+
+// ✅ -> Listar itens de acordo com o filtro selecionado (vide utils.js)
+async function filterItem(userCart, filter) {
+  let filteredItems = await filterItemList(userCart, filter);
+  console.log(`
+See your items by ${filter}`);
+  Array.from(filteredItems).forEach((element) => console.log(`Item: ${element.name} | Price: ${element.price} | Quantity: ${element.quantity}`))
 }
 
 
-export { addItem, calculateTotal, deleteItem, removeItem, displayCart, filterCart };
+export { addItem, calculateTotal, deleteItem, removeItem, displayCart, filterItem };

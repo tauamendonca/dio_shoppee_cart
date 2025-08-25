@@ -1,12 +1,14 @@
-//quais açoes minha wishlist pode fazer
+import { filterItemList } from "./utils.js";
 
-// ✅ -> adicionar item na wishlist
+//AÇÕES DA WISHLIST
+
+// ✅ -> Adicionar item na wishlist
 async function addItem(userWishlist, item) {
   userWishlist.push(item);
 }
 
 
-// ✅ -> deletar item da wishlist
+// ✅ -> Deletar item da wishlist
 async function deleteItem(userWishlist, item) {
   //1. Encontrar o indice do item
   const indexFound = userWishlist.findIndex((p) => p.name === item.name);
@@ -23,7 +25,7 @@ async function deleteItem(userWishlist, item) {
 }
 
 
-// ✅ -> mostra todos os items da wishlist
+// ✅ -> Mostrar todos os items da wishlist
 async function displayWishlist(userWishlist) {
   console.log("\nYour 🛍️ Shopee Wishlist:");
   userWishlist.forEach((item, index) => {
@@ -33,4 +35,14 @@ async function displayWishlist(userWishlist) {
   });
 }
 
-export { addItem, deleteItem, displayWishlist };
+
+// ✅ -> Listar itens de acordo com o filtro selecionado (vide utils.js)
+async function filterItem(userWishlist, filter) {
+  let filteredItems = await filterItemList(userWishlist, filter);
+  console.log(`
+See your items by ${filter}`);
+  Array.from(filteredItems).forEach((element) => console.log(`Item: ${element.name} | Price: ${element.price} | Quantity: ${element.quantity}`))
+}
+
+
+export { addItem, deleteItem, displayWishlist, filterItem };
