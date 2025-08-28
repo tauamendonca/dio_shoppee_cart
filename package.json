@@ -1,7 +1,7 @@
 {
-  "name": "06-shopee-cart",
+  "name": "dio-shopee-cart",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simulation of the logic behind a customer's cart on Shopee online store",
   "type": "module",
   "main": "index.js",
   "scripts": {
